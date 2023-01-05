@@ -44,9 +44,9 @@ public class WorkoutService {
                 .user(user.get())
                 .build();
 
-        if (newWorkoutDto.getGymName() != null) {
-            Gym gym = gymRepository.findByName(newWorkoutDto.getGymName())
-                    .orElseThrow(() -> new NotFoundException("Gym named " + newWorkoutDto.getGymName() + " not found!"));
+        if (newWorkoutDto.getGymId() != null) {
+            Gym gym = gymRepository.findById(newWorkoutDto.getGymId())
+                    .orElseThrow(() -> new NotFoundException("Gym with id " + newWorkoutDto.getGymId() + " not found!"));
             workout.setGym(gym);
         }
 
