@@ -46,7 +46,7 @@ public class GymService {
     public void removeGym(Long id, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        if (!user.getRole().equals(Role.ADMIN)) {
+        if (!Role.ADMIN.equals(user.getRole())) {
             throw new BadRequestException("Only admins can make this operation!");
         }
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new NotFoundException("Gym with id " + id + " not found!"));
