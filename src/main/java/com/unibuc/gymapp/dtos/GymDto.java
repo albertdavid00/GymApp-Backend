@@ -7,9 +7,12 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
-public class NewWorkoutDto {
+public class GymDto {
 
     @NotBlank
-    private String title;
-    private Long gymId;
+    private String name;
+    @NotBlank
+    private String location;
+    @NotBlank
+    private String program;
 }
