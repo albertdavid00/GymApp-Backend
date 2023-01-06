@@ -1,6 +1,6 @@
 package com.unibuc.gymapp.controllers;
 
-import com.unibuc.gymapp.dtos.NewSetDto;
+import com.unibuc.gymapp.dtos.SetDto;
 import com.unibuc.gymapp.services.SetService;
 import com.unibuc.gymapp.utils.KeycloakHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +16,17 @@ public class SetController {
     @Autowired
     public SetController(SetService setService) {
         this.setService = setService;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteSet(@PathVariable Long id, Authentication authentication) {
+        setService.deleteSet(id, KeycloakHelper.getUserId(authentication));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateSet(@PathVariable Long id, @RequestBody SetDto setDto, Authentication authentication) {
+        setService.updateSet(setDto, id, KeycloakHelper.getUserId(authentication));
+        return  new ResponseEntity<>(HttpStatus.OK);
     }
 }

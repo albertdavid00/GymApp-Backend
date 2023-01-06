@@ -40,6 +40,7 @@ public class WorkoutService {
         Workout workout = Workout.builder()
                 .title(newWorkoutDto.getTitle())
                 .creationTime(Instant.now().truncatedTo(ChronoUnit.SECONDS))
+                .volume(0.0)
                 .ended(false)
                 .user(user.get())
                 .build();

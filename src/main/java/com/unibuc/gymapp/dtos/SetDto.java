@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class NewSetDto {
+public class SetDto {
     @NotNull
     @Min(value = 0, message = "The value must be positive")
     private Double weight;

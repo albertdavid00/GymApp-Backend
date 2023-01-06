@@ -27,6 +27,8 @@ public class Workout {
     @NotNull
     private Instant creationTime;
     private Long durationInMinutes;
+    @Column(columnDefinition = "double default 0.0")
+    private Double volume;
     @NotNull
     private boolean ended;
     @ManyToOne
