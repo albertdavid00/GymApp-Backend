@@ -51,6 +51,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/gyms/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/gyms").hasRole("ADMIN")
                 .antMatchers("/gyms/favorite").authenticated()
+                .antMatchers("/sets/**").authenticated()
                 .anyRequest().permitAll();
     }
 }

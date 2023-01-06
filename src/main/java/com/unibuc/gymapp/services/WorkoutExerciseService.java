@@ -1,6 +1,6 @@
 package com.unibuc.gymapp.services;
 
-import com.unibuc.gymapp.dtos.NewSetDto;
+import com.unibuc.gymapp.dtos.SetDto;
 import com.unibuc.gymapp.models.Exercise;
 import com.unibuc.gymapp.models.Set;
 import com.unibuc.gymapp.models.Workout;
@@ -9,6 +9,7 @@ import com.unibuc.gymapp.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import java.time.Instant;
@@ -50,7 +51,8 @@ public class WorkoutExerciseService {
         return workoutExerciseRepository.save(workoutExercise).getId();
     }
 
-    public Long addSetToWorkoutExercise(NewSetDto newSetDto, Long id, Long userId) {
+    @Transactional
+    public Long addSetToWorkoutExercise(SetDto newSetDto, Long id, Long userId) {
         WorkoutExercise workoutExercise = workoutExerciseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Workout exercise with id " + id + " not found!"));
         if (workoutExercise.getWorkout().isEnded() || !workoutExercise.getWorkout().getUser().getId().equals(userId)) {
@@ -62,6 +64,15 @@ public class WorkoutExerciseService {
                 .setType(newSetDto.getSetType())
                 .workoutExercise(workoutExercise)
                 .build();
-        return setRepository.save(set).getId();
+
+        Long setId = setRepository.save(set).getId();
+        updateWorkoutVolume(workoutExercise.getWorkout(), newSetDto.getWeight(), newSetDto.getRepetitions());
+
+        return setId;
+    }
+    protected void updateWorkoutVolume(Workout workout, Double weight, Integer reps) {
+        Double updatedVolume = workout.getVolume() + weight * reps;
+        workout.setVolume(updatedVolume);
+        workoutRepository.save(workout);
     }
 }

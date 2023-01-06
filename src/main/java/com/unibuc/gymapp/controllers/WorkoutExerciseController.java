@@ -1,6 +1,6 @@
 package com.unibuc.gymapp.controllers;
 
-import com.unibuc.gymapp.dtos.NewSetDto;
+import com.unibuc.gymapp.dtos.SetDto;
 import com.unibuc.gymapp.services.WorkoutExerciseService;
 import com.unibuc.gymapp.utils.KeycloakHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class WorkoutExerciseController {
     }
 
     @PostMapping("/add-set/{id}")
-    public ResponseEntity<?> addSetToWorkoutExercise(@PathVariable Long id, @RequestBody NewSetDto newSetDto, Authentication authentication) {
+    public ResponseEntity<?> addSetToWorkoutExercise(@PathVariable Long id, @RequestBody SetDto newSetDto, Authentication authentication) {
         return new ResponseEntity<>(workoutExerciseService.addSetToWorkoutExercise(newSetDto, id, KeycloakHelper.getUserId(authentication)),
                 HttpStatus.CREATED);
     }
