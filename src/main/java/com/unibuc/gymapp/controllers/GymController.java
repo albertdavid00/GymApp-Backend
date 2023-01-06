@@ -36,4 +36,9 @@ public class GymController {
     public ResponseEntity<?> getGym(@PathVariable Long id) {
         return new ResponseEntity<>(gymService.getGym(id), HttpStatus.OK);
     }
+
+    @GetMapping("/favorite")
+    public ResponseEntity<?> getFavoriteGym(Authentication authentication) {
+        return new ResponseEntity<>(gymService.getFavoriteGym(KeycloakHelper.getUserId(authentication)), HttpStatus.OK);
+    }
 }

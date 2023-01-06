@@ -72,4 +72,21 @@ public class GymService {
                 .location(gym.getLocation())
                 .program(gym.getProgram()).build();
     }
+
+    public GymDto getFavoriteGym(Long userId) {
+
+        if (userRepository.findById(userId).isEmpty()) {
+            throw new NotFoundException("User not found!");
+        }
+        List<Gym> topGyms = gymRepository.findTopGymsForUser(userId);
+        if (topGyms.isEmpty()) {
+            throw new NotFoundException("User has no top gyms!");
+        }
+        Gym favoriteGym = topGyms.get(0);
+        return GymDto.builder()
+                .name(favoriteGym.getName())
+                .location(favoriteGym.getLocation())
+                .program(favoriteGym.getProgram())
+                .build();
+    }
 }
