@@ -7,6 +7,7 @@ import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
@@ -42,7 +43,14 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
                 .cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/events").authenticated()
+                .antMatchers("/login", "/users/register", "/exercises/search").permitAll()
+                .antMatchers("/workouts/**").authenticated()
+                .antMatchers("/workout-exercises/**").authenticated()
+                .antMatchers("/exercises").authenticated()
+                .antMatchers(HttpMethod.GET, "/gyms").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/gyms/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/gyms").hasRole("ADMIN")
+                .antMatchers("/gyms/favorite").authenticated()
                 .anyRequest().permitAll();
     }
 }
