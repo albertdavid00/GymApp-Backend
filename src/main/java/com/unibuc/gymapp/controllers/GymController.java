@@ -1,5 +1,6 @@
 package com.unibuc.gymapp.controllers;
 
+import com.unibuc.gymapp.dtos.GymDto;
 import com.unibuc.gymapp.dtos.NewGymDto;
 import com.unibuc.gymapp.services.GymService;
 import com.unibuc.gymapp.utils.KeycloakHelper;
@@ -24,7 +25,7 @@ public class GymController {
 
     @PostMapping
     @Operation(summary = "Allows admins to add a new gym to the application and returns the id.")
-    public ResponseEntity<?> addGym(@RequestBody NewGymDto newGymDto, Authentication authentication) {
+    public ResponseEntity<?> addGym(@RequestBody GymDto newGymDto, Authentication authentication) {
         return new ResponseEntity<>(gymService.addGym(newGymDto, KeycloakHelper.getUserId(authentication)),
                 HttpStatus.CREATED);
     }
