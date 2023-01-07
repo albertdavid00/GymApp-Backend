@@ -25,7 +25,7 @@ public class GymService {
         this.userRepository = userRepository;
     }
 
-    public Long addGym(NewGymDto newGymDto, Long userId) {
+    public Long addGym(GymDto newGymDto, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (!user.getRole().equals(Role.ADMIN)) {

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Builder
 public class GymDto {
-
     @NotBlank
     private String name;
     @NotBlank
