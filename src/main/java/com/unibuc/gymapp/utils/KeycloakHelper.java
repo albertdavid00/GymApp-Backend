@@ -8,7 +8,4 @@ public class KeycloakHelper {
         return Long.parseLong(((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext()
                 .getToken().getPreferredUsername());
     }
-    public static Boolean userIsAdmin(Authentication authentication) {
-        return ((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext().getToken().getRealmAccess().getRoles().contains("ROLE_ADMIN");
-    }
 }
