@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExerciseService {
@@ -39,14 +41,15 @@ public class ExerciseService {
         return exerciseRepository.save(exercise).getId();
     }
 
-    public ExerciseDto searchExercise(String title) {
-        Exercise exercise = exerciseRepository.findByTitle(title)
-                .orElseThrow(() -> new NotFoundException("Exercise named " + title + " not found!"));
-        return ExerciseDto.builder()
-                .title(exercise.getTitle())
-                .description(exercise.getDescription())
-                .equipmentType(exercise.getEquipmentType())
-                .targetedMuscles(exercise.getTargetedMuscles())
-                .build();
+    public List<ExerciseDto> searchExercise(String title) {
+        List<Exercise> exercises = exerciseRepository.searchByTitle("%" + title + "%");
+        return exercises.stream()
+                .map(exercise -> ExerciseDto.builder()
+                        .title(exercise.getTitle())
+                        .description(exercise.getDescription())
+                        .equipmentType(exercise.getEquipmentType())
+                        .targetedMuscles(exercise.getTargetedMuscles())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
