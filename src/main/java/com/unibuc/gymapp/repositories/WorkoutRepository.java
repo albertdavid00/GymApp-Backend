@@ -12,4 +12,6 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
 
     @Query("SELECT w FROM Workout w WHERE w.id = :workoutId AND w.user.id = :userId AND w.ended = FALSE")
     Optional<Workout> findActiveWorkoutOfUser(Long workoutId, Long userId);
+
+    Optional<Workout> findByIdAndEndedTrue(Long id);
 }

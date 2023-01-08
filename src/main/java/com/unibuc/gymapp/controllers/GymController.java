@@ -1,7 +1,6 @@
 package com.unibuc.gymapp.controllers;
 
 import com.unibuc.gymapp.dtos.GymDto;
-import com.unibuc.gymapp.dtos.NewGymDto;
 import com.unibuc.gymapp.services.GymService;
 import com.unibuc.gymapp.utils.KeycloakHelper;
 import io.swagger.v3.oas.annotations.Operation;
