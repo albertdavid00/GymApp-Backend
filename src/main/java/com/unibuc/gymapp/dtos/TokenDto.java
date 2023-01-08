@@ -1,9 +1,11 @@
 package com.unibuc.gymapp.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class TokenDto {
 
     @JsonProperty("access_token")
