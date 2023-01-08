@@ -28,7 +28,7 @@ public class ExerciseController {
                 HttpStatus.CREATED);
     }
     @GetMapping("/search")
-    @Operation(summary = "Searches for the exercises with the tile containing the specified string and returns a list.")
+    @Operation(summary = "Searches for the exercises with the title containing the specified string and returns a list.")
     public ResponseEntity<?> searchExercise(@RequestParam String title) {
         return new ResponseEntity<>(exerciseService.searchExercise(title), HttpStatus.OK);
     }
