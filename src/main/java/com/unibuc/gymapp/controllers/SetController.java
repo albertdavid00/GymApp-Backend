@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.unibuc.gymapp.utils.HttpStatusUtility.successResponse;
+
 @RestController
 @RequestMapping("/sets")
 @Tag(name = "Set Controller", description = "Endpoints for managing the set entity.")
@@ -26,7 +28,7 @@ public class SetController {
     description = "Once the set is deleted, the workout's volume value will also decrease.")
     public ResponseEntity<?> deleteSet(@PathVariable Long id, Authentication authentication) {
         setService.deleteSet(id, KeycloakHelper.getUserId(authentication));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
 
     @PutMapping("/{id}")
@@ -34,6 +36,6 @@ public class SetController {
             description = "Once the set is edited, the workout's volume value will also be updated.")
     public ResponseEntity<?> updateSet(@PathVariable Long id, @RequestBody SetDto setDto, Authentication authentication) {
         setService.updateSet(setDto, id, KeycloakHelper.getUserId(authentication));
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
 }

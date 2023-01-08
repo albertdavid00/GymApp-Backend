@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.unibuc.gymapp.utils.HttpStatusUtility.successResponse;
+
 @RestController
 @RequestMapping("/workouts")
 @Tag(name = "Workout Controller", description = "Set of endpoints for managing the workout entity.")
@@ -35,6 +37,6 @@ public class WorkoutController {
             description = "After finishing the workout, the duration (in minutes) is calculated automatically.")
     public ResponseEntity<?> finishWorkout(@PathVariable Long id, Authentication authentication) {
         workoutService.finishWorkout(id, KeycloakHelper.getUserId(authentication));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
 }
