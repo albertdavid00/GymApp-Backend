@@ -1,7 +1,6 @@
 package com.unibuc.gymapp.services;
 
 import com.unibuc.gymapp.dtos.GymDto;
-import com.unibuc.gymapp.dtos.NewGymDto;
 import com.unibuc.gymapp.models.Gym;
 import com.unibuc.gymapp.models.Role;
 import com.unibuc.gymapp.models.User;
