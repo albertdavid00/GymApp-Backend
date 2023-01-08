@@ -57,7 +57,7 @@ public class WorkoutService {
     public void finishWorkout(Long id, Long userId) {
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Workout with id " + id + "not found!"));
-        if (workout.getUser().getId() != userId) {
+        if (!workout.getUser().getId().equals(userId)) {
            throw new BadRequestException("You cannot update workouts that are not yours!");
         }
         if (workout.isEnded()) {
