@@ -16,12 +16,10 @@ import javax.ws.rs.NotFoundException;
 @Service
 public class SetService {
     private final SetRepository setRepository;
-    private final WorkoutExerciseRepository workoutExerciseRepository;
     private final WorkoutExerciseService workoutExerciseService;
     @Autowired
     public SetService(SetRepository setRepository, WorkoutExerciseRepository workoutExerciseRepository, WorkoutExerciseService workoutExerciseService) {
         this.setRepository = setRepository;
-        this.workoutExerciseRepository = workoutExerciseRepository;
         this.workoutExerciseService = workoutExerciseService;
     }
 
