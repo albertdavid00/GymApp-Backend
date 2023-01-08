@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.unibuc.gymapp.utils.HttpStatusUtility.successResponse;
+
 @RestController
 @RequestMapping("/comments")
 @Tag(name = "Set of endpoints for managing the comment entity.")
@@ -37,12 +39,12 @@ public class CommentController {
             description = "The content and the creation time of the comment are updated.")
     public ResponseEntity<?> editComment(@PathVariable Long id, @RequestBody CommentDto commentDto, Authentication authentication) {
         commentService.editComment(commentDto, id, KeycloakHelper.getUserId(authentication));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
     @DeleteMapping("{id}")
     @Operation(summary = "Deletes an existing comment that belongs to the authenticated user.")
     public ResponseEntity<?> deleteComment(@PathVariable Long id, Authentication authentication) {
         commentService.deleteComment(id, KeycloakHelper.getUserId(authentication));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
 }

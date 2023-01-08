@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.unibuc.gymapp.utils.HttpStatusUtility.successResponse;
+
 @RestController
 @RequestMapping("/gyms")
 @Tag(name = "Gym Controller", description = "Set of endpoints for managing the gym entity.")
@@ -32,7 +34,7 @@ public class GymController {
     @Operation(summary = "Allows admins to delete a gym from the application.")
     public ResponseEntity<?> removeGym(@PathVariable Long id, Authentication authentication) {
         gymService.removeGym(id, KeycloakHelper.getUserId(authentication));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successResponse();
     }
     @GetMapping
     @Operation(summary = "Returns a list with all the gyms in the application.")
