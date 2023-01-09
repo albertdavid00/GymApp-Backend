@@ -1,6 +1,37 @@
 # GymApp-Backend
+Developed using Java 17 and Spring Boot.
+
 ## About The Project
-GymApp is a REST API made using Spring Boot for the people that want to easily keep track of their gym progress.
+The purpose of the application is to help the persons that go to the gym regularly, by
+keeping track of their progress throughout time and by managing their workout
+routines. The application also targets a social side, by sharing thoughts about
+people’s workouts.
+## Business Requirements
+1. Users should be able to authenticate/register into the application.
+2. Users should be able to manage their profile and view other users.
+3. Users should be able to view the available gyms.
+4. Users should be able to start a new empty workout.
+5. Users should be able to add exercises and sets to an active workout.
+6. To find a specific exercise, users should be able to filter through exercises by
+specifying the name.
+7. Users should be able to finish a workout and view details about their workout
+(with insights about the volume and duration calculated automatically).
+8. Users should be able to add comments to workouts they find interesting and
+manage them.
+9. Users should be able to view their favourite gym (calculated based on the
+number of workouts done there).
+10.Admins should be able to add new gyms in the application and manage them.
+11. Admins should be able to add new examples of exercises in the application
+and manage them.
+
+## Five Main Features
+### User
+a. Two types of user: ADMIN and USER. The admins are allowed to
+manage entities (such as exercise, gym etc.) that concern all users,
+they have full control over the application, while the normal users can
+make basic operations on the workouts.
+b. Represent a way to identify into the application.
+c. Hold information such as first name, last name, email, age.
 
 <!-- GETTING STARTED -->
 ## Getting Started
