@@ -20,4 +20,5 @@ public class ExerciseDto {
     private EquipmentType equipmentType;
     @NotNull
     private List<MuscleGroup> targetedMuscles;
+    private List<SetDto> sets;
 }

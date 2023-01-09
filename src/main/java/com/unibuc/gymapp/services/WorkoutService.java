@@ -1,12 +1,12 @@
 package com.unibuc.gymapp.services;
 
-import com.unibuc.gymapp.dtos.NewWorkoutDto;
-import com.unibuc.gymapp.models.Gym;
-import com.unibuc.gymapp.models.User;
-import com.unibuc.gymapp.models.Workout;
+import com.unibuc.gymapp.dtos.*;
+import com.unibuc.gymapp.models.*;
 import com.unibuc.gymapp.repositories.GymRepository;
 import com.unibuc.gymapp.repositories.UserRepository;
 import com.unibuc.gymapp.repositories.WorkoutRepository;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,9 @@ import javax.ws.rs.NotFoundException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkoutService {
@@ -69,5 +71,56 @@ public class WorkoutService {
         workout.setDurationInMinutes(duration);
         workout.setEnded(true);
         workoutRepository.save(workout);
+    }
+
+    public WorkoutDto getWorkout(Long id) {
+        Workout workout = workoutRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Workout not found!"));
+
+        List<CommentDto> comments = workout.getComments().stream()
+                .map(comment -> CommentDto.builder()
+                        .username(comment.getUser().getFirstName() + " " + comment.getUser().getLastName())
+                        .content(comment.getContent())
+                        .creationTime(comment.getCreationTime())
+                        .build())
+                .collect(Collectors.toList());
+
+        GymDto gymDto = null;
+        if (workout.getGym() != null) {
+            gymDto = GymDto.builder()
+                    .name(workout.getGym().getName())
+                    .location(workout.getGym().getLocation())
+                    .program(workout.getGym().getProgram())
+                    .build();
+        }
+        List<ExerciseDto> exercises = workout.getExercises().stream()
+                .map(workoutExercise -> {
+                    List<SetDto> sets = workoutExercise.getSets().stream()
+                            .map(set -> SetDto.builder()
+                                    .weight(set.getWeight())
+                                    .repetitions(set.getRepetitions())
+                                    .setType(set.getSetType())
+                                    .build())
+                            .collect(Collectors.toList());
+                    return (Pair<Exercise, List<SetDto>>) new ImmutablePair<>(workoutExercise.getExercise(), sets);
+                })
+                .map(pair -> ExerciseDto.builder()
+                        .title(pair.getLeft().getTitle())
+                        .equipmentType(pair.getLeft().getEquipmentType())
+                        .targetedMuscles(pair.getLeft().getTargetedMuscles())
+                        .sets(pair.getRight())
+                        .build())
+                .collect(Collectors.toList());
+
+        return WorkoutDto.builder()
+                .title(workout.getTitle())
+                .creationTime(workout.getCreationTime())
+                .durationInMinutes(workout.getDurationInMinutes())
+                .volume(workout.getVolume())
+                .ended(workout.isEnded())
+                .comments(comments)
+                .exercises(exercises)
+                .gymDto(gymDto)
+                .build();
     }
 }

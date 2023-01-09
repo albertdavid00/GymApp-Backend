@@ -39,4 +39,11 @@ public class WorkoutController {
         workoutService.finishWorkout(id, KeycloakHelper.getUserId(authentication));
         return successResponse();
     }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Allows an authenticated user to get a workout.")
+    public ResponseEntity<?> getWorkout(@PathVariable Long id) {
+        return new ResponseEntity<>(workoutService.getWorkout(id),
+                HttpStatus.OK);
+    }
 }
