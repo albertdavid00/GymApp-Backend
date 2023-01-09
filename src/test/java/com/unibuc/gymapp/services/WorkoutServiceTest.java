@@ -1,6 +1,7 @@
 package com.unibuc.gymapp.services;
 
 import com.unibuc.gymapp.dtos.NewWorkoutDto;
+import com.unibuc.gymapp.dtos.WorkoutDto;
 import com.unibuc.gymapp.models.Gym;
 import com.unibuc.gymapp.models.User;
 import com.unibuc.gymapp.models.Workout;
@@ -20,6 +21,7 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,11 +55,15 @@ public class WorkoutServiceTest {
                 .build();
         workout = Workout.builder()
                 .id(3L)
+                .title("Test")
                 .ended(false)
                 .creationTime(Instant.now().truncatedTo(ChronoUnit.SECONDS))
                 .volume(0.0)
+                .durationInMinutes(0L)
                 .user(user)
                 .gym(gym)
+                .exercises(List.of())
+                .comments(List.of())
                 .build();
     }
 
@@ -156,6 +162,28 @@ public class WorkoutServiceTest {
             workoutService.finishWorkout(workout.getId(), user.getId());
         });
         assertEquals(message, thrown.getMessage());
+    }
+
+    @Test
+    @DisplayName("Get workout - expect success")
+    public void getWorkout() {
+        workout.setGym(null);
+        WorkoutDto workoutDto = WorkoutDto.builder()
+                .title(workout.getTitle())
+                .gymDto(null)
+                .exercises(List.of())
+                .comments(List.of())
+                .ended(workout.isEnded())
+                .volume(workout.getVolume())
+                .durationInMinutes(workout.getDurationInMinutes())
+                .creationTime(workout.getCreationTime())
+                .build();
+
+        when(workoutRepository.findById(workout.getId())).thenReturn(Optional.of(workout));
+        WorkoutDto result = workoutService.getWorkout(workout.getId());
+
+        assertEquals(workoutDto, result);
+
     }
 
 }
