@@ -1,0 +1,1159 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Gym Buddy",
+    "description": "A web app for keeping track of the gym progress.",
+    "version": "V1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearer": [
+        "read",
+        "write"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth Controller",
+      "description": "Endpoints for access and refresh tokens for user."
+    },
+    {
+      "name": "Workout-Exercise Controller",
+      "description": "Set of endpoints for managing exercise operations inside an active workout."
+    },
+    {
+      "name": "Exercise Controller",
+      "description": "Set of endpoints for managing the exercise entity."
+    },
+    {
+      "name": "Set of endpoints for managing the comment entity."
+    },
+    {
+      "name": "Gym Controller",
+      "description": "Set of endpoints for managing the gym entity."
+    },
+    {
+      "name": "Set Controller",
+      "description": "Endpoints for managing the set entity."
+    },
+    {
+      "name": "User Controller",
+      "description": "Contains endpoints for managing users."
+    },
+    {
+      "name": "Workout Controller",
+      "description": "Set of endpoints for managing the workout entity."
+    }
+  ],
+  "paths": {
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Returns the user with the specified id",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Updates the user with the specified id",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sets/{id}": {
+      "get": {
+        "tags": [
+          "Set Controller"
+        ],
+        "summary": "Returns the set with the specified id",
+        "operationId": "getSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Set Controller"
+        ],
+        "summary": "Allows an authenticated user to edit a set from a workout.",
+        "description": "Once the set is edited, the workout's volume value will also be updated.",
+        "operationId": "updateSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Set Controller"
+        ],
+        "summary": "Allows an authenticated user to delete a set from a workout.",
+        "description": "Once the set is deleted, the workout's volume value will also decrease.",
+        "operationId": "deleteSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises/{id}": {
+      "put": {
+        "tags": [
+          "Exercise Controller"
+        ],
+        "summary": "Allows admins to edit a specified exercise",
+        "operationId": "updateExercise",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExerciseDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "put": {
+        "tags": [
+          "Set of endpoints for managing the comment entity."
+        ],
+        "summary": "Edits an existing comment that belongs to the authenticated user.",
+        "description": "The content and the creation time of the comment are updated.",
+        "operationId": "editComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Set of endpoints for managing the comment entity."
+        ],
+        "summary": "Adds a new comment to a specific finished workout and returns the id.",
+        "operationId": "addCommentToWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Set of endpoints for managing the comment entity."
+        ],
+        "summary": "Deletes an existing comment that belongs to the authenticated user.",
+        "operationId": "deleteComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workouts": {
+      "post": {
+        "tags": [
+          "Workout Controller"
+        ],
+        "summary": "Allows an authenticated user to create a new empty workout and returns the id of it.",
+        "operationId": "addWorkout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewWorkoutDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workout-exercises/{workoutId}/{exerciseId}": {
+      "post": {
+        "tags": [
+          "Workout-Exercise Controller"
+        ],
+        "summary": "Allows the authenticated user to add a new exercise to a workout and returns the id of the newly created entity.",
+        "operationId": "addExerciseToWorkout",
+        "parameters": [
+          {
+            "name": "workoutId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "exerciseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workout-exercises/add-set/{id}": {
+      "post": {
+        "tags": [
+          "Workout-Exercise Controller"
+        ],
+        "summary": "Adds a new set to a specific exercise inside an active workout and returns the id of the new set.",
+        "description": "Once the set is added to the workout, the volume is also updated.",
+        "operationId": "addSetToWorkoutExercise",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Sign up a new user into the application.",
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Auth Controller"
+        ],
+        "summary": "Logs in the user and returns an access and refresh token",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gyms": {
+      "get": {
+        "tags": [
+          "Gym Controller"
+        ],
+        "summary": "Returns a list with all the gyms in the application.",
+        "operationId": "getAllGyms",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Gym Controller"
+        ],
+        "summary": "Allows admins to add a new gym to the application and returns the id.",
+        "operationId": "addGym",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GymDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises": {
+      "post": {
+        "tags": [
+          "Exercise Controller"
+        ],
+        "summary": "Allows admins to add a new exercise in the application and returns the id.",
+        "operationId": "addExercise",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExerciseDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workouts/{id}": {
+      "get": {
+        "tags": [
+          "Workout Controller"
+        ],
+        "summary": "Allows an authenticated user to get a workout.",
+        "operationId": "getWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Workout Controller"
+        ],
+        "summary": "Allows an authenticated user to change the state of the workout to finished.",
+        "description": "After finishing the workout, the duration (in minutes) is calculated automatically.",
+        "operationId": "finishWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Returns a list of all users.",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gyms/{id}": {
+      "get": {
+        "tags": [
+          "Gym Controller"
+        ],
+        "summary": "Returns the gym with the specified id.",
+        "operationId": "getGym",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gym Controller"
+        ],
+        "summary": "Allows admins to delete a gym from the application.",
+        "operationId": "removeGym",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gyms/favorite": {
+      "get": {
+        "tags": [
+          "Gym Controller"
+        ],
+        "summary": "Returns the gym where the authenticated user had most of their workouts.",
+        "operationId": "getFavoriteGym",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises/filter": {
+      "get": {
+        "tags": [
+          "Exercise Controller"
+        ],
+        "summary": "Filters the exercises with the title containing the specified string and returns a list.",
+        "operationId": "filterExercise",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/workout/{id}": {
+      "get": {
+        "tags": [
+          "Set of endpoints for managing the comment entity."
+        ],
+        "summary": "Returns a list with all the comments of a specific workout",
+        "operationId": "getCommentsForWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workout-exercises/{id}": {
+      "delete": {
+        "tags": [
+          "Workout-Exercise Controller"
+        ],
+        "summary": "Deletes an exercise from a workout and all dependent sets.",
+        "operationId": "deleteWorkoutExercise",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SetDto": {
+        "required": [
+          "repetitions",
+          "setType",
+          "weight"
+        ],
+        "type": "object",
+        "properties": {
+          "weight": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "repetitions": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "setType": {
+            "type": "string",
+            "enum": [
+              "NORMAL",
+              "WARM_UP",
+              "DROP",
+              "FAILURE"
+            ]
+          }
+        }
+      },
+      "UpdateExerciseDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "equipmentType": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "MACHINE",
+              "DUMBBELL",
+              "BARBELL",
+              "CABLE",
+              "OTHER"
+            ]
+          },
+          "targetedMuscles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CHEST",
+                "LATS",
+                "BICEPS",
+                "TRICEPS",
+                "SHOULDERS",
+                "FOREARMS",
+                "TRAPS",
+                "ABDOMINALS",
+                "HAMSTRINGS",
+                "QUADRICEPS",
+                "GLUTES",
+                "OTHER"
+              ]
+            }
+          }
+        }
+      },
+      "CommentDto": {
+        "required": [
+          "content"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "NewWorkoutDto": {
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "gymId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RegisterDto": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 6,
+            "type": "string"
+          },
+          "age": {
+            "maximum": 99,
+            "minimum": 12,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "grantType": {
+            "type": "string"
+          }
+        }
+      },
+      "GymDto": {
+        "required": [
+          "location",
+          "name",
+          "program"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "program": {
+            "type": "string"
+          }
+        }
+      },
+      "ExerciseDto": {
+        "required": [
+          "description",
+          "equipmentType",
+          "targetedMuscles",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "equipmentType": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "MACHINE",
+              "DUMBBELL",
+              "BARBELL",
+              "CABLE",
+              "OTHER"
+            ]
+          },
+          "targetedMuscles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CHEST",
+                "LATS",
+                "BICEPS",
+                "TRICEPS",
+                "SHOULDERS",
+                "FOREARMS",
+                "TRAPS",
+                "ABDOMINALS",
+                "HAMSTRINGS",
+                "QUADRICEPS",
+                "GLUTES",
+                "OTHER"
+              ]
+            }
+          },
+          "sets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SetDto"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

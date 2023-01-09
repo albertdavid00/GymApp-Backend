@@ -106,6 +106,7 @@ public class WorkoutService {
                 })
                 .map(pair -> ExerciseDto.builder()
                         .title(pair.getLeft().getTitle())
+                        .description(pair.getLeft().getDescription())
                         .equipmentType(pair.getLeft().getEquipmentType())
                         .targetedMuscles(pair.getLeft().getTargetedMuscles())
                         .sets(pair.getRight())
