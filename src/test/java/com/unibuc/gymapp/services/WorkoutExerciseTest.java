@@ -156,7 +156,7 @@ public class WorkoutExerciseTest {
     }
 
     @Test
-    @DisplayName("Add set to execise - expected Not Found")
+    @DisplayName("Add set to exercise - expected Not Found")
     public void addSetToExerciseNotFound() {
         SetDto setDto = SetDto.builder()
                 .weight(10.0)
