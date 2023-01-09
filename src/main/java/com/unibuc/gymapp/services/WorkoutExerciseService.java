@@ -75,4 +75,13 @@ public class WorkoutExerciseService {
         workout.setVolume(updatedVolume);
         workoutRepository.save(workout);
     }
+
+    public void deleteWorkoutExercise(Long id, Long userId) {
+        WorkoutExercise workoutExercise = workoutExerciseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Workout exercise not found!"));
+        if (!workoutExercise.getWorkout().getUser().getId().equals(userId)){
+            throw new BadRequestException("You can't delete exercises of workouts that are not yours!");
+        }
+        workoutExerciseRepository.delete(workoutExercise);
+    }
 }

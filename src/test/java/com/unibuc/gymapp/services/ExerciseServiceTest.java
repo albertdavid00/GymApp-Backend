@@ -108,13 +108,13 @@ public class ExerciseServiceTest {
     }
 
     @Test
-    @DisplayName("Search exercises - expected success")
-    public void searchExercise() {
+    @DisplayName("Filter exercises - expected success")
+    public void filterExercise() {
         List<ExerciseDto> expected = List.of(exerciseDto);
         String search = "%" + exercise.getTitle() + "%";
 
-        when(exerciseRepository.searchByTitle(search)).thenReturn(List.of(exercise));
-        List<ExerciseDto> result = exerciseService.searchExercise(exercise.getTitle());
+        when(exerciseRepository.filterByTitle(search)).thenReturn(List.of(exercise));
+        List<ExerciseDto> result = exerciseService.filterExercises(exercise.getTitle());
 
         Assertions.assertEquals(expected, result);
     }

@@ -28,7 +28,7 @@ public class WorkoutExercise {
     @ManyToOne
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
-    @OneToMany(mappedBy = "workoutExercise")
+    @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.REMOVE)
     private List<Set> sets;
 
 }

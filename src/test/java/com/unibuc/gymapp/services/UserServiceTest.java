@@ -1,6 +1,8 @@
 package com.unibuc.gymapp.services;
 
 import com.unibuc.gymapp.dtos.RegisterDto;
+import com.unibuc.gymapp.dtos.UpdateUserDto;
+import com.unibuc.gymapp.dtos.UserDto;
 import com.unibuc.gymapp.models.User;
 import com.unibuc.gymapp.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.ws.rs.BadRequestException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -38,6 +41,9 @@ public class UserServiceTest {
         user = User.builder()
                 .id(1L)
                 .email("test@mail.com")
+                .firstName("Test")
+                .lastName("Test")
+                .age(13)
                 .build();
         registerDto = registerDto.builder()
                 .email("test@mail.com")
@@ -69,4 +75,39 @@ public class UserServiceTest {
         Assertions.assertEquals(message, thrown.getMessage());
     }
 
+    @Test
+    @DisplayName("Get All Users - expected success")
+    public void getAllUsers() {
+        when(userRepository.findAll()).thenReturn(List.of(user));
+        List<UserDto> users = List.of(UserDto.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .age(user.getAge())
+                .build());
+        Assertions.assertEquals(users, userService.getUsers());
+    }
+
+    @Test
+    @DisplayName("Get User By Id - expect success")
+    public void getUser() {
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        UserDto userDto = UserDto.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .age(user.getAge())
+                .build();
+
+        Assertions.assertEquals(userDto, userService.getUser(user.getId()));
+    }
+
+    @Test
+    @DisplayName("Update user - expect success")
+    public void updateUser() {
+        UpdateUserDto updateUserDto = UpdateUserDto.builder()
+                .age(30).build();
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(userRepository.getById(user.getId())).thenReturn(user);
+        userService.updateUser(updateUserDto, user.getId(), user.getId());
+        Assertions.assertEquals(updateUserDto.getAge(), user.getAge());
+    }
 }

@@ -156,7 +156,7 @@ public class WorkoutExerciseTest {
     }
 
     @Test
-    @DisplayName("Add set to execise - expected Not Found")
+    @DisplayName("Add set to exercise - expected Not Found")
     public void addSetToExerciseNotFound() {
         SetDto setDto = SetDto.builder()
                 .weight(10.0)
@@ -188,5 +188,13 @@ public class WorkoutExerciseTest {
             workoutExerciseService.addSetToWorkoutExercise(setDto, workoutExercise.getId(), user.getId());
         });
         Assertions.assertEquals("Invalid workout!", thrown.getMessage());
+    }
+
+    @Test
+    @DisplayName("Delete exercise from workout - expect success")
+    public void deleteExerciseFromWorkout() {
+        when(workoutExerciseRepository.findById(workoutExercise.getId())).thenReturn(Optional.of(workoutExercise));
+        workoutExerciseService.deleteWorkoutExercise(workoutExercise.getId(), user.getId());
+        verify(workoutExerciseRepository).delete(any(WorkoutExercise.class));
     }
 }

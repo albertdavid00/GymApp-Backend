@@ -24,7 +24,7 @@ public class SetController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Allows an authenticated user delete a set from a workout.",
+    @Operation(summary = "Allows an authenticated user to delete a set from a workout.",
     description = "Once the set is deleted, the workout's volume value will also decrease.")
     public ResponseEntity<?> deleteSet(@PathVariable Long id, Authentication authentication) {
         setService.deleteSet(id, KeycloakHelper.getUserId(authentication));
