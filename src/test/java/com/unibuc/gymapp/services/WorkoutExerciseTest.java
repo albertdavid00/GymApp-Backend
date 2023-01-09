@@ -189,4 +189,12 @@ public class WorkoutExerciseTest {
         });
         Assertions.assertEquals("Invalid workout!", thrown.getMessage());
     }
+
+    @Test
+    @DisplayName("Delete exercise from workout - expect success")
+    public void deleteExerciseFromWorkout() {
+        when(workoutExerciseRepository.findById(workoutExercise.getId())).thenReturn(Optional.of(workoutExercise));
+        workoutExerciseService.deleteWorkoutExercise(workoutExercise.getId(), user.getId());
+        verify(workoutExerciseRepository).delete(any(WorkoutExercise.class));
+    }
 }

@@ -27,9 +27,9 @@ public class ExerciseController {
         return new ResponseEntity<>(exerciseService.addExercise(newExerciseDto, KeycloakHelper.getUserId(authentication)),
                 HttpStatus.CREATED);
     }
-    @GetMapping("/search")
-    @Operation(summary = "Searches for the exercises with the title containing the specified string and returns a list.")
-    public ResponseEntity<?> searchExercise(@RequestParam String title) {
-        return new ResponseEntity<>(exerciseService.searchExercise(title), HttpStatus.OK);
+    @GetMapping("/filter")
+    @Operation(summary = "Filters the exercises with the title containing the specified string and returns a list.")
+    public ResponseEntity<?> filterExercise(@RequestParam String title) {
+        return new ResponseEntity<>(exerciseService.filterExercises(title), HttpStatus.OK);
     }
 }

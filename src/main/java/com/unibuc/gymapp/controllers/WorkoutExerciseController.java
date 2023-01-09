@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.unibuc.gymapp.utils.HttpStatusUtility.successResponse;
+
 @RestController
 @RequestMapping("/workout-exercises")
 @Tag(name = "Workout-Exercise Controller", description = "Set of endpoints for managing exercise operations inside an active workout.")
@@ -35,5 +37,12 @@ public class WorkoutExerciseController {
     public ResponseEntity<?> addSetToWorkoutExercise(@PathVariable Long id, @RequestBody SetDto newSetDto, Authentication authentication) {
         return new ResponseEntity<>(workoutExerciseService.addSetToWorkoutExercise(newSetDto, id, KeycloakHelper.getUserId(authentication)),
                 HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deletes an exercise from a workout and all dependent sets.")
+    public ResponseEntity<?> deleteWorkoutExercise(@PathVariable Long id, Authentication authentication) {
+        workoutExerciseService.deleteWorkoutExercise(id, KeycloakHelper.getUserId(authentication));
+        return successResponse();
     }
 }

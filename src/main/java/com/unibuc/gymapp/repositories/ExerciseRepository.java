@@ -14,5 +14,5 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     Optional<Exercise> findByTitle(String title);
 
     @Query("SELECT e FROM Exercise e WHERE e.title LIKE :title")
-    List<Exercise> searchByTitle(String title);
+    List<Exercise> filterByTitle(String title);
 }

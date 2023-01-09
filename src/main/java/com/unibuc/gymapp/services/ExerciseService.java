@@ -41,8 +41,8 @@ public class ExerciseService {
         return exerciseRepository.save(exercise).getId();
     }
 
-    public List<ExerciseDto> searchExercise(String title) {
-        List<Exercise> exercises = exerciseRepository.searchByTitle("%" + title + "%");
+    public List<ExerciseDto> filterExercises(String title) {
+        List<Exercise> exercises = exerciseRepository.filterByTitle("%" + title + "%");
         return exercises.stream()
                 .map(exercise -> ExerciseDto.builder()
                         .title(exercise.getTitle())
