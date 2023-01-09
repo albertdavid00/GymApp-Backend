@@ -26,12 +26,12 @@ and manage them.
 
 ## Five Main Features
 ### User
-a. Two types of user: ADMIN and USER. The admins are allowed to
+1. Two types of user: ADMIN and USER. The admins are allowed to
 manage entities (such as exercise, gym etc.) that concern all users,
 they have full control over the application, while the normal users can
 make basic operations on the workouts.
-b. Represent a way to identify into the application.
-c. Hold information such as first name, last name, email, age.
+2. Represent a way to identify into the application.
+3. Hold information such as first name, last name, email, age.
 
 <!-- GETTING STARTED -->
 ## Getting Started
