@@ -32,6 +32,29 @@ they have full control over the application, while the normal users can
 make basic operations on the workouts.
 2. Represent a way to identify into the application.
 3. Hold information such as first name, last name, email, age.
+### Workout
+1. The app revolves around this entity.
+2. Used by users to record information about their real-life workout and
+keep track of their progress.
+3. Holds the exercises done by the user during the session and also gives
+insights about the volume and the duration of the workout.
+### Exercise 
+1. Represent examples of physical activities that users can perform in the
+gym.
+2. Hold information like a description of steps to do the exercise correctly,
+what muscle groups are targeted (ex. Chest, Shoulders, Biceps etc.)
+and what equipment is required (ex. Barbell, Dumbbell etc.).
+### Workout-Exercise
+1. Represents the relationship between a user’s workout and the
+exercises they are about to perform during the workout.
+2. Holds information about the sets that the user performs for that specific
+exercise.
+### Set 
+1. Holds information about the user’s performance for an exercise, such
+as the weight, the number of repetitions and the type of the set
+(warm-up, normal, drop, failure etc.).
+
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
