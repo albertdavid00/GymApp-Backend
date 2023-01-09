@@ -53,4 +53,17 @@ public class SetService {
         workoutExerciseService.updateWorkoutVolume(workout, setDto.getWeight(), setDto.getRepetitions());
         setRepository.save(set);
     }
+
+    public SetDto getSet(Long id, Long userId) {
+        Set set = setRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Set not found!"));
+        if (!set.getWorkoutExercise().getWorkout().getUser().getId().equals(userId)) {
+            throw new BadRequestException("You can only access the sets that belong to your workouts!");
+        }
+        return SetDto.builder()
+                .setType(set.getSetType())
+                .weight(set.getWeight())
+                .repetitions(set.getRepetitions())
+                .build();
+    }
 }

@@ -1,6 +1,7 @@
 package com.unibuc.gymapp.services;
 
 import com.unibuc.gymapp.dtos.ExerciseDto;
+import com.unibuc.gymapp.dtos.UpdateExerciseDto;
 import com.unibuc.gymapp.models.Exercise;
 import com.unibuc.gymapp.models.Role;
 import com.unibuc.gymapp.models.User;
@@ -51,5 +52,26 @@ public class ExerciseService {
                         .targetedMuscles(exercise.getTargetedMuscles())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public void updateExercise(UpdateExerciseDto updateExerciseDto, Long id, Long userId) {
+        if (!Role.ADMIN.equals(userRepository.getById(userId).getRole())) {
+            throw new BadRequestException("Only admins can make this operation!");
+        }
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Exercise not found!"));
+        if (updateExerciseDto.getTitle() != null && !updateExerciseDto.getTitle().isBlank()){
+            exercise.setTitle(updateExerciseDto.getTitle());
+        }
+        if (updateExerciseDto.getDescription() != null && !updateExerciseDto.getDescription().isBlank()) {
+            exercise.setDescription(updateExerciseDto.getDescription());
+        }
+        if (updateExerciseDto.getEquipmentType() != null) {
+            exercise.setEquipmentType(updateExerciseDto.getEquipmentType());
+        }
+        if (updateExerciseDto.getTargetedMuscles() != null && !updateExerciseDto.getTargetedMuscles().isEmpty()) {
+            exercise.setTargetedMuscles(updateExerciseDto.getTargetedMuscles());
+        }
+        exerciseRepository.save(exercise);
     }
 }

@@ -1,6 +1,7 @@
 package com.unibuc.gymapp.controllers;
 
 import com.unibuc.gymapp.dtos.ExerciseDto;
+import com.unibuc.gymapp.dtos.UpdateExerciseDto;
 import com.unibuc.gymapp.services.ExerciseService;
 import com.unibuc.gymapp.utils.KeycloakHelper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,5 +32,12 @@ public class ExerciseController {
     @Operation(summary = "Searches for the exercises with the title containing the specified string and returns a list.")
     public ResponseEntity<?> searchExercise(@RequestParam String title) {
         return new ResponseEntity<>(exerciseService.searchExercise(title), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Allows admins to edit a specified exercise")
+    public ResponseEntity<?> updateExercise(@PathVariable Long id, @RequestBody UpdateExerciseDto updateExerciseDto, Authentication authentication) {
+        exerciseService.updateExercise(updateExerciseDto, id, KeycloakHelper.getUserId(authentication));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

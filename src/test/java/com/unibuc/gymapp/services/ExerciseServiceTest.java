@@ -1,9 +1,11 @@
 package com.unibuc.gymapp.services;
 
 import com.unibuc.gymapp.dtos.ExerciseDto;
+import com.unibuc.gymapp.dtos.UpdateExerciseDto;
 import com.unibuc.gymapp.models.*;
 import com.unibuc.gymapp.repositories.ExerciseRepository;
 import com.unibuc.gymapp.repositories.UserRepository;
+import org.hibernate.sql.Update;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -115,5 +117,20 @@ public class ExerciseServiceTest {
         List<ExerciseDto> result = exerciseService.searchExercise(exercise.getTitle());
 
         Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("Edit exercise - expected success")
+    public void updateExerciseTest() {
+        UpdateExerciseDto updateExerciseDto = UpdateExerciseDto.builder()
+                .title("Updated title")
+                .build();
+
+        when(exerciseRepository.findById(exercise.getId())).thenReturn(Optional.of(exercise));
+        when(userRepository.getById(user.getId())).thenReturn(user);
+
+        exerciseService.updateExercise(updateExerciseDto, exercise.getId(), user.getId());
+
+        Assertions.assertEquals(updateExerciseDto.getTitle(), exercise.getTitle());
     }
 }
