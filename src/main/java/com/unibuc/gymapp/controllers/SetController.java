@@ -38,4 +38,10 @@ public class SetController {
         setService.updateSet(setDto, id, KeycloakHelper.getUserId(authentication));
         return successResponse();
     }
+    @GetMapping("{id}")
+    @Operation(summary = "Returns the set with the specified id")
+    public ResponseEntity<?> getSet(@PathVariable Long id, Authentication authentication) {
+        return new ResponseEntity<>(setService.getSet(id, KeycloakHelper.getUserId(authentication)),
+                HttpStatus.OK);
+    }
 }

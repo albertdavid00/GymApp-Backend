@@ -146,4 +146,19 @@ public class SetServiceTest {
         });
         assertEquals(message, thrown.getMessage());
     }
+
+    @Test
+    @DisplayName("Get Set - expect success")
+    public void getSetTest() {
+        SetDto setDto = SetDto.builder()
+                .weight(10.0)
+                .repetitions(3)
+                .setType(SetType.NORMAL)
+                .build();
+        when(setRepository.findById(set.getId())).thenReturn(Optional.of(set));
+
+        SetDto result = setService.getSet(set.getId(), user.getId());
+
+        assertEquals(setDto, result);
+    }
 }
